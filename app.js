@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !="production"){
+if (process.env.NODE_ENV != "production") {
 
     require('dotenv').config();
 }
@@ -13,16 +13,16 @@ const ejsMate = require("ejs-mate");
 const ExpressErr = require("./utils/ExpressErr.js");
 const listingsRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review.js");
-const userRouter=require("./routes/user.js");
+const userRouter = require("./routes/user.js");
 const session = require("express-session");
-const MongoStore=require("connect-mongo");
+const MongoStore = require("connect-mongo");
 const { expression } = require("joi");
 const flash = require('connect-flash');
-const passport=require("passport");
-const LocalStrategy=require("passport-local");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-const dbUrl=process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL;
 
 main()
     .then(() => {
@@ -43,16 +43,16 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
-const store= MongoStore.create({
-    mongoUrl:dbUrl,
-    crypto:{
-        secret:SECRET,
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET
     },
-    touchAfter:24*3600,
+    touchAfter: 24 * 3600,
 });
 
-store.on("error",()=>{
-    console.log("ERROR in mongo session",err);
+store.on("error", () => {
+    console.log("ERROR in mongo session", err);
 });
 
 const sessionOptions = {
@@ -88,13 +88,13 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser=req.user;
+    res.locals.currUser = req.user;
     next();
 });//middleware for session
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-app.use("/",userRouter);
+app.use("/", userRouter);
 
 
 
