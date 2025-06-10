@@ -28,9 +28,12 @@
 - `/views` – EJS templates for rendering pages
 - `/public` – Static files (CSS, JS, images)
 
-## 🛠️ Setup Instructions
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/anushkayadav06/Wanderlust.git
-   cd Wanderlust
+## env
+-ATLASDB_URL=your_mongodb_connection_string
+-SECRET=your_session_secret
+-CLOUDINARY_CLOUD_NAME=your_cloud_name
+-CLOUDINARY_KEY=your_key
+-CLOUDINARY_SECRET=your_secret
+
+
